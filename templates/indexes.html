@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Prediction</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://storage.googleapis.com/lablab-static-eu/images%2Fsubmissions%2Fcljwh9rau0000286g6whvtqsm%2Fcljabqew1002q2v6y7697ro8q_b6x2gnd_imageLink.jpg');
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(240, 240, 240, 0.8);
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .app-name {
+            font-family: 'Roboto', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            margin: 0;
+        }
+
+        .content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 60px; /* Height of the toolbar */
+        }
+
+        .content form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        input[type="file"] {
+            margin-bottom: 10px;
+        }
+
+        .predict-btn {
+            padding: 8px 15px;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-top: 10px;
+            background-color: #008CBA;
+        }
+
+        .predict-btn:hover {
+            background-color: #007B9A;
+        }
+
+        .prediction-result {
+            text-align: center;
+            color: white;
+            position: absolute;
+            bottom: 10%; /* Adjust this value to move result up or down */
+            width: 100%;
+        }
+        
+        .prediction-result h3, .prediction-result p, .prediction-result a {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 10px;
+            border-radius: 4px;
+            display: inline-block;
+            color: white;
+            text-decoration: none;
+        }
+
+        .prediction-result a:hover {
+            text-decoration: underline;
+        }
+        
+        .solution {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="toolbar">
+        <div class="app-name">Dermal Dynamics</div>
+    </div>
+
+    <div class="content">
+        <form action="{{ url_for('predict') }}" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" required>
+            <button type="submit" class="predict-btn">Predict</button>
+        </form>
+    </div>
+
+    <div class="prediction-result">
+        {% if prediction %}
+            <h3>Prediction: {{ prediction }}</h3>
+            <p class="solution"><strong>Solution:</strong> {{ solution }}</p>
+            <p>For more information, visit: <a href="{{ link }}" target="_blank">Government Medical Site</a></p>
+        {% endif %}
+    </div>
+</body>
+</html>
